@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/16 14:55:32 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:26:35 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_charcmp(char *str, char c)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == c)
 		{
@@ -30,26 +30,36 @@ int	ft_charcmp(char *str, char c)
 	return (0);
 }
 
+#include <stdio.h>
+
 char	*get_next_line(int fd)
 {
 	char			buff[SIZE + 1];
-	size_t			i;
+	ssize_t			i;
 	char			*line;
-	static char		*end = NULL;
+	static char		*next_line = NULL;
 
 	i = 1;
-	line = end;
+	line = next_line;
+//	if (end != NULL)
+//		free(end);
+	if (read(fd, NULL, 0) < 0)
+		return (NULL);
 	while (i > 0)
 	{
-		i = read(fd, buff, SIZE);
-		buff[i] = '\0';
-		line = ft_strjoin(line, buff);
 		if (ft_charcmp(line, '\n'))
 		{
-			end = ft_strnext_line(line);
+			next_line = ft_strnext_line(line);
 			return (ft_strcut(line));
 		}
+		i = read(fd, buff, SIZE);
+		if (i <= 0 && line == NULL)
+			return (NULL);
+		buff[i] = '\0';
+		line = ft_strjoin(line, buff);
 	}
+	if (line)
+		return (line);
 	return (NULL);
 }
 
@@ -57,18 +67,21 @@ int	main(void)
 {
 	int		fd;
 	char	*line;
+	int		i;
 
+	i = 0;
+	line = NULL;
 	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		return (0);
-	line = get_next_line(fd);
-	while (line)
+	do
 	{
-		ft_putstr(line);
-		free(line);
+		if (line)
+			free(line);
 		line = get_next_line(fd);
-	}
+		printf("[%d]>>>>%s", i, line);
+		i++;
+	}while (line);
 	close(fd);
-	free(line);
 	return (0);
 }

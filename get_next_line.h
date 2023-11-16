@@ -18,7 +18,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define SIZE 25
+#  define SIZE 1024
 # endif
 # ifdef BUFFER_SIZE
 #  define SIZE BUFFER_SIZE

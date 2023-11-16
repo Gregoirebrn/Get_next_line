@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:30 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/16 14:55:32 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:10:03 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,16 @@ char	*ft_strjoin(char *s1, char const *s2)
 		join[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	if (i > 0)
+		free(s1);
+	while (s2 && s2[j])
 	{
 		join[i + j] = s2[j];
 		j++;
 	}
 	join[i + j] = '\0';
-	if (s1)
-		free(s1);
+//	if (s1)
+//		free(s1);
 	return (join);
 }
 
@@ -56,11 +58,13 @@ char	*ft_strcut(char *str)
 	char	*line;
 
 	i = 0;
-	while (str[i] && str[i] != '\n')
+	while (str && str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n' && i == 0)
 		i++;
-	line = malloc(sizeof(char) * (i + 1));
+	line = malloc(sizeof(char) * (i + 2));
+	if (line == NULL)
+		return (NULL);
 	x = 0;
 	while (x <= i)
 	{
@@ -85,6 +89,8 @@ char	*ft_strnext_line(char *str)
 	if (len == after)
 		return (next_line);
 	next_line = malloc(sizeof(char) * (len - after + 1));
+	if (next_line == NULL)
+		return (NULL);
 	i = 0;
 	while (after < len)
 	{
@@ -94,16 +100,4 @@ char	*ft_strnext_line(char *str)
 	}
 	next_line[i] = '\0';
 	return (next_line);
-}
-
-void	ft_putstr(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
 }
