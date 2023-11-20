@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:28 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/15 19:22:07 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:30:11 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define SIZE 1024
+#  define SIZE 1000000
 # endif
 # ifdef BUFFER_SIZE
 #  define SIZE BUFFER_SIZE
@@ -31,5 +31,8 @@ char	*ft_strnext_line(char *str);
 int		ft_charcmp(char *str, char c);
 size_t	ft_strlen(const char *str);
 void	ft_putstr(char *str);
+char	*ft_lastline(char *str);
+
+#include "stdio.h"
 
 #endif

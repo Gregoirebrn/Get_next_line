@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/16 20:26:35 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:17:42 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ int	ft_charcmp(char *str, char c)
 		{
 			if (i == 0)
 				return (i + 1);
-			return (i);
+			return (i + 1);
 		}
 		i++;
 	}
 	return (0);
 }
 
-#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -41,10 +40,12 @@ char	*get_next_line(int fd)
 
 	i = 1;
 	line = next_line;
-//	if (end != NULL)
-//		free(end);
 	if (read(fd, NULL, 0) < 0)
-		return (NULL);
+	{
+			next_line = NULL;
+			free(line);
+			return (NULL);
+	}
 	while (i > 0)
 	{
 		if (ft_charcmp(line, '\n'))
@@ -53,13 +54,16 @@ char	*get_next_line(int fd)
 			return (ft_strcut(line));
 		}
 		i = read(fd, buff, SIZE);
-		if (i <= 0 && line == NULL)
+		if (i <= 0 && (line == NULL || line[0] == '\0'))
 			return (NULL);
+		if (line && i == 0)
+		{
+			next_line = NULL;
+			return (ft_lastline(line));
+		}
 		buff[i] = '\0';
 		line = ft_strjoin(line, buff);
 	}
-	if (line)
-		return (line);
 	return (NULL);
 }
 

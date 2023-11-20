@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:30 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/16 20:10:03 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:45:02 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ char	*ft_strjoin(char *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = '\0';
-//	if (s1)
-//		free(s1);
 	return (join);
 }
 
@@ -59,9 +57,9 @@ char	*ft_strcut(char *str)
 
 	i = 0;
 	while (str && str[i] && str[i] != '\n')
+	{
 		i++;
-	if (str[i] == '\n' && i == 0)
-		i++;
+	}
 	line = malloc(sizeof(char) * (i + 2));
 	if (line == NULL)
 		return (NULL);
@@ -94,10 +92,31 @@ char	*ft_strnext_line(char *str)
 	i = 0;
 	while (after < len)
 	{
-		after++;
 		next_line[i] = str[after];
+		after++;
 		i++;
 	}
 	next_line[i] = '\0';
 	return (next_line);
+}
+
+char	*ft_lastline(char *str)
+{
+	size_t	i;
+	size_t	x;
+	char	*last;
+
+	i = ft_strlen(str);
+	last = malloc(sizeof(char) * (i + 1));
+	if (!last)
+		return (last);
+	x = 0;
+	while (x < i)
+	{
+		last[x] = str[x];
+		x++;
+	}
+	last[x] = '\0';
+	free(str);
+	return (last);
 }
