@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/20 17:17:42 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:56:37 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ char	*get_next_line(int fd)
 	i = 1;
 	line = next_line;
 	if (read(fd, NULL, 0) < 0)
-	{
-			next_line = NULL;
-			free(line);
-			return (NULL);
-	}
+		return (free(line), next_line = NULL, NULL);
 	while (i > 0)
 	{
 		if (ft_charcmp(line, '\n'))
@@ -54,7 +50,7 @@ char	*get_next_line(int fd)
 			return (ft_strcut(line));
 		}
 		i = read(fd, buff, SIZE);
-		if (i <= 0 && (line == NULL || line[0] == '\0'))
+		if (i <= 0 && (!line))
 			return (NULL);
 		if (line && i == 0)
 		{
@@ -67,25 +63,27 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
 
-	i = 0;
-	line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	if (fd == -1)
-		return (0);
-	do
-	{
-		if (line)
-			free(line);
-		line = get_next_line(fd);
-		printf("[%d]>>>>%s", i, line);
-		i++;
-	}while (line);
-	close(fd);
-	return (0);
-}
+//#include "stdio.h"
+//int	main(void)
+//{
+//	int		fd;
+//	char	*line;
+//	int		i;
+//
+//	i = 0;
+//	line = NULL;
+//	fd = open("test.txt", O_RDONLY);
+//	if (fd == -1)
+//		return (0);
+//	do
+//	{
+//		if (line)
+//			free(line);
+//		line = get_next_line(fd);
+//		printf("[%d]>>>>%s", i, line);
+//		i++;
+//	}while (line);
+//	close(fd);
+//	return (0);
+//}

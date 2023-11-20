@@ -33,6 +33,4 @@ size_t	ft_strlen(const char *str);
 void	ft_putstr(char *str);
 char	*ft_lastline(char *str);
 
-#include "stdio.h"
-
 #endif
