@@ -29,5 +29,6 @@ size_t	ft_charcmp(char *str, char c);
 size_t	ft_strlen(const char *str);
 void	ft_putstr(char *str);
 char	*ft_lastline(char *str);
+char	*ft_freenjoin(char *s1, char *s2);
 
 #endif

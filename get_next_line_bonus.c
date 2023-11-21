@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdasdfasdfasget_next_line_bonus.c                  :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/21 12:08:25 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:26:04 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
 
 size_t	ft_charcmp(char *str, char c)
 {
@@ -53,22 +63,20 @@ char	*get_next_line(int fd)
 	while (i > 0)
 	{
 		if (ft_charcmp(line, '\n'))
-		{
-			next_line[fd] = ft_strnext_line(line);
-			return (ft_strcut(line));
-		}
+			return (next_line[fd] = ft_strnext_line(line), ft_strcut(line));
 		i = read(fd, buff, BUFFER_SIZE);
 		if (i <= 0 && (!line))
 			return (NULL);
 		if (line && i == 0)
 			return (next_line[fd] = NULL, ft_lastline(line));
 		buff[i] = '\0';
-		line = ft_strjoin(line, buff);
+		line = ft_freenjoin(line, buff);
 		if (!line)
 			return (NULL);
 	}
 	return (NULL);
 }
+
 //
 //#include "stdio.h"
 //int	main(void)

@@ -12,14 +12,20 @@
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_freenjoin(char *s1, char *s2)
 {
-	size_t	i;
+	char	*tmp;
 
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
+	tmp = ft_strjoin(s1, s2);
+	if (tmp == NULL)
+	{
+		if (s1)
+			free(s1);
+		return (NULL);
+	}
+	if (s1)
+		free(s1);
+	return (tmp);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -27,23 +33,23 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*join;
 	size_t	i;
 	size_t	j;
+	size_t	len;
 
 	i = 0;
 	j = 0;
 	join = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (join == NULL)
-	{
-		if (s1)
-			free(s1);
+	if (!join)
 		return (NULL);
-	}
+	len = ft_strlen(s1);
 	while (s1 && s1[i])
-		join[i] = s1[i], i++;//! norm !
-	if (i > 0)
-		free(s1);
-	while (s2 && s2[j])
-		join[i + j] = s2[j], j++;//! norm !
-	join[i + j] = '\0';
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	len = ft_strlen(s2);
+	while (s2 && j++ < len)
+		join[i + j - 1] = s2[j - 1];
+	join[i + j - 1] = '\0';
 	return (join);
 }
 

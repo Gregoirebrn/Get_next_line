@@ -6,11 +6,21 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/21 17:35:30 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:14:52 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
 
 size_t	ft_charcmp(char *str, char c)
 {
@@ -46,7 +56,7 @@ char	*read_line(int fd, char *line, char **next_line)
 		if (line && i == 0)
 			return (*next_line = NULL, ft_lastline(line));
 		buff[i] = '\0';
-		line = ft_strjoin(line, buff);
+		line = ft_freenjoin(line, buff);
 		if (!line)
 			return (NULL);
 	}

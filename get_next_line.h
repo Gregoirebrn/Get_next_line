@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:28 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/21 15:03:18 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:14:04 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ size_t	ft_strlen(const char *str);
 void	ft_putstr(char *str);
 char	*ft_lastline(char *str);
 void	ft_memmove(char *str);
+char	*ft_freenjoin(char *s1, char *s2);
 
 #endif
