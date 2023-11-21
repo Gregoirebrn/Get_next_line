@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   fdasdfasdfasget_next_line_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:32 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/21 17:35:30 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:08:25 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_charcmp(char *str, char c)
 {
@@ -30,21 +30,38 @@ size_t	ft_charcmp(char *str, char c)
 	return (0);
 }
 
-char	*read_line(int fd, char *line, char **next_line)
+void	ft_bzero(void *s, size_t n)
 {
-	char	buff[BUFFER_SIZE + 1];
-	ssize_t	i;
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		((char *)s)[i++] = '\0';
+}
+
+char	*get_next_line(int fd)
+{
+	char			buff[BUFFER_SIZE + 1];
+	ssize_t			i;
+	char			*line;
+	static char		*next_line[OPEN_MAX + 1];
 
 	i = 1;
+	line = next_line[fd];
+	if ((fd < 0 || fd > OPEN_MAX) || read(fd, NULL, 0) < 0)
+		return (free(line), next_line[fd] = NULL, NULL);
 	while (i > 0)
 	{
 		if (ft_charcmp(line, '\n'))
-			return (*next_line = ft_strnext_line(line), ft_strcut(line));
+		{
+			next_line[fd] = ft_strnext_line(line);
+			return (ft_strcut(line));
+		}
 		i = read(fd, buff, BUFFER_SIZE);
 		if (i <= 0 && (!line))
 			return (NULL);
 		if (line && i == 0)
-			return (*next_line = NULL, ft_lastline(line));
+			return (next_line[fd] = NULL, ft_lastline(line));
 		buff[i] = '\0';
 		line = ft_strjoin(line, buff);
 		if (!line)
@@ -52,21 +69,8 @@ char	*read_line(int fd, char *line, char **next_line)
 	}
 	return (NULL);
 }
-
-char	*get_next_line(int fd)
-{
-	char		*line;
-	static char	*next_line = NULL;
-
-	line = next_line;
-	if (read(fd, NULL, 0) < 0)
-		return (free(line), next_line = NULL);
-	return (read_line(fd, line, &next_line));
-}
-
-//#include <fcntl.h>
-//#include <stdio.h>
 //
+//#include "stdio.h"
 //int	main(void)
 //{
 //	int		fd;

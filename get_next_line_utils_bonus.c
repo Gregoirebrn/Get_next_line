@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:42:30 by grebrune          #+#    #+#             */
-/*   Updated: 2023/11/21 15:39:18 by grebrune         ###   ########.fr       */
+/*   Updated: 2023/11/21 12:08:54 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -31,24 +31,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	join = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!join)
+	if (join == NULL)
 	{
 		if (s1)
 			free(s1);
 		return (NULL);
 	}
 	while (s1 && s1[i])
-	{
-		join[i] = s1[i];
-		i++;
-	}
+		join[i] = s1[i], i++;//! norm !
 	if (i > 0)
 		free(s1);
 	while (s2 && s2[j])
-	{
-		join[i + j] = s2[j];
-		j++;
-	}
+		join[i + j] = s2[j], j++;//! norm !
 	join[i + j] = '\0';
 	return (join);
 }
@@ -61,7 +55,9 @@ char	*ft_strcut(char *str)
 
 	i = 0;
 	while (str && str[i] && str[i] != '\n')
+	{
 		i++;
+	}
 	line = malloc(sizeof(char) * (i + 2));
 	if (line == NULL)
 		return (NULL);
@@ -73,7 +69,6 @@ char	*ft_strcut(char *str)
 	}
 	line[x] = '\0';
 	free(str);
-	str = NULL;
 	return (line);
 }
 
@@ -112,7 +107,7 @@ char	*ft_lastline(char *str)
 	i = ft_strlen(str);
 	last = malloc(sizeof(char) * (i + 1));
 	if (!last)
-		return (NULL);
+		return (last);
 	x = 0;
 	while (x < i)
 	{
@@ -121,6 +116,5 @@ char	*ft_lastline(char *str)
 	}
 	last[x] = '\0';
 	free(str);
-	str = NULL;
 	return (last);
 }
